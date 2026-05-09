@@ -1,11 +1,6 @@
 name: Daily Sustainability Digest
 
 on:
-  schedule:
-    # Runs at 7:00 AM UTC every Saturday
-    # Adjust the hour to match your timezone:
-    #   7:00 UTC = 8:00 London | 9:00 Paris | 3:00 New York | 15:00 Singapore
-    - cron: "0 7 * * 6"
 
   # Lets you trigger it manually from the GitHub Actions tab (great for testing)
   workflow_dispatch:
