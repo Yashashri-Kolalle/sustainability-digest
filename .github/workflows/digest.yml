@@ -1,0 +1,35 @@
+name: Daily Sustainability Digest
+
+on:
+  schedule:
+    # Runs at 7:00 AM UTC every Saturday
+    # Adjust the hour to match your timezone:
+    #   7:00 UTC = 8:00 London | 9:00 Paris | 3:00 New York | 15:00 Singapore
+    - cron: "0 7 * * 6"
+
+  # Lets you trigger it manually from the GitHub Actions tab (great for testing)
+  workflow_dispatch:
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Run digest script
+        env:
+          ANTHROPIC_API_KEY:    ${{ secrets.ANTHROPIC_API_KEY }}
+          RECIPIENT_EMAIL:      ${{ secrets.RECIPIENT_EMAIL }}
+          SENDER_EMAIL:         ${{ secrets.SENDER_EMAIL }}
+          SENDER_APP_PASSWORD:  ${{ secrets.SENDER_APP_PASSWORD }}
+        run: python digest.py
